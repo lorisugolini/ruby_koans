@@ -181,7 +181,7 @@ module Neo
         yield
       rescue Exception => ex
         expected = ex.is_a?(exception)
-        assert(expected, "Exception #{exception.inspect} expected, but #{ex.inspect} was raised")
+        assert(expected, "Exception #{exception.inspect} expected, but #{ex.inspect} (#{ex.class}) was raised")
         return ex
       end
       flunk "Exception #{exception.inspect} expected, but nothing raised"
