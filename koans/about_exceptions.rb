@@ -18,6 +18,7 @@ class AboutExceptions < Neo::Koan
     assert_equal nil, MySpecialError.ancestors[7]
     assert_equal nil, MySpecialError.ancestors[8]
     assert_equal MySpecialError, MySpecialError.ancestors[0]
+    assert_equal Array, MySpecialError.ancestors.class
   end
 
   def test_rescue_clause
@@ -28,15 +29,19 @@ class AboutExceptions < Neo::Koan
       result = :exception_handled
     end
 
-    assert_equal __, result
+    assert_equal :exception_handled, result
 
-    assert_equal __, ex.is_a?(StandardError), "Should be a Standard Error"
-    assert_equal __, ex.is_a?(RuntimeError),  "Should be a Runtime Error"
+    assert_equal true, ex.is_a?(StandardError), "Should be a Standard Error"
+    assert_equal true, ex.is_a?(RuntimeError),  "Should be a Runtime Error"
+
+    # UGL aggiunte io
+    assert ex.is_a?(StandardError), "Should be a Standard Error"
+    assert ex.is_a?(RuntimeError),  "Should be a Runtime Error"
 
     assert RuntimeError.ancestors.include?(StandardError),
       "RuntimeError is a subclass of StandardError"
 
-    assert_equal __, ex.message
+    assert_equal "Oops", ex.message
   end
 
   def test_raising_a_particular_error
@@ -48,8 +53,8 @@ class AboutExceptions < Neo::Koan
       result = :exception_handled
     end
 
-    assert_equal __, result
-    assert_equal __, ex.message
+    assert_equal :exception_handled, result
+    assert_equal "My Message", ex.message
   end
 
   def test_ensure_clause
@@ -62,13 +67,13 @@ class AboutExceptions < Neo::Koan
       result = :always_run
     end
 
-    assert_equal __, result
+    assert_equal :always_run, result
   end
 
   # Sometimes, we must know about the unknown
   def test_asserting_an_error_is_raised
     # A do-end is a block, a topic to explore more later
-    assert_raise(___) do
+    assert_raise(MySpecialError) do
       raise MySpecialError.new("New instances can be raised directly.")
     end
   end
