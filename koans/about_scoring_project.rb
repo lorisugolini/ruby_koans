@@ -29,7 +29,7 @@ require File.expand_path(File.dirname(__FILE__) + '/neo')
 #
 # Your goal is to write the score method.
 
-def score(dice)
+def my_score(dice)
   return 0 if dice.empty?
 
   hash = { 1 => 0, 2 => 0, 3 => 0, 4 => 0, 5 => 0, 6 => 0 }  
@@ -51,6 +51,17 @@ def score(dice)
     score += (100*value) if key == 1 
   end
   #puts "--------------------END-----------------------"
+  score
+end
+
+# UGL questo mi piace, trovato qui (modificato solo l'if):
+# http://stackoverflow.com/questions/4749973/ruby-greed-koan-how-can-i-improve-my-if-then-soup 
+def score(dice)
+  score = [0, 100, 200, 1000, 1100, 1200][dice.count(1)]
+  score += [0, 50, 100, 500, 550, 600][dice.count(5)]
+  [2,3,4,6].each do |num|
+      score += num * 100 if dice.count(num) >= 3
+  end
   score
 end
 
