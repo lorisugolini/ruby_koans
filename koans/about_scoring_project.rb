@@ -32,22 +32,25 @@ require File.expand_path(File.dirname(__FILE__) + '/neo')
 def score(dice)
   return 0 if dice.empty?
 
-  hash = { 1 => 0, 2 => 0, 3 => 0, 4 => 0, 5 => 0, 6 => 0 }
-  game = dice.sort
-  game.each do |each| 
+  hash = { 1 => 0, 2 => 0, 3 => 0, 4 => 0, 5 => 0, 6 => 0 }  
+  dice.each do |each| 
     hash[each] += 1
   end
-  puts hash
-  #puts "--------------------"
+  #puts hash
 
   score = 0
   hash.each do |key, value|
-    #puts key
-    #puts value
+    if (value >= 3)
+      score += 1000 if key == 1
+      score += (100*key) if key != 1
+
+      value -= 3
+    end
+
     score +=  (50*value) if key == 5
     score += (100*value) if key == 1 
   end
-  puts "--------------------END-----------------------"
+  #puts "--------------------END-----------------------"
   score
 end
 
