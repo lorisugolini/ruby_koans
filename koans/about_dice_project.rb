@@ -4,11 +4,14 @@ require File.expand_path(File.dirname(__FILE__) + '/neo')
 #
 class DiceSet
   attr_reader :values
-  def roll(size)
+  def my_roll(size)
     @values = Array.new(size)
     (0...size).each do |dice|
       @values[dice] = 1 + rand(6) #(dice % 6) 
     end
+  end
+  def roll(size)
+    @values = size.times.map{ 1+ rand(6)}
   end
 end
 
