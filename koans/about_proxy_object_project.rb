@@ -24,11 +24,7 @@ class Proxy
     puts "proxy-ing method: #{method_name} with args: #{args}"
     if @object.respond_to? method_name
       puts "obj respond_to method #{method_name}"
-      if (args.nil? || args.empty?)
-        @object.__send__(method_name)
-      else
-        @object.__send__(method_name.to_sym, args)
-      end
+      @object.__send__(method_name, *args)
     else
       super(method_name, *args, &block)
     end
