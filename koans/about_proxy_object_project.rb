@@ -22,12 +22,8 @@ class Proxy
  
   # WRITE CODE HERE
   def method_missing(method_name, *args, &block)
-    if @object.respond_to? method_name
-      @messages[method_name] += 1
-      @object.__send__(method_name, *args)
-    else
-      super(method_name, *args, &block)
-    end
+    @messages[method_name] += 1
+    @object.__send__(method_name, *args, &block)
   end
 
   def called?(method_name)
