@@ -17,19 +17,13 @@ class Proxy
     @object = target_object
 
     # ADD MORE CODE HERE
-    @messages = Hash.new
+    @messages = Hash.new(0)
   end
  
   # WRITE CODE HERE
   def method_missing(method_name, *args, &block)
-    #puts "proxy-ing method: #{method_name} with args: #{args}"
     if @object.respond_to? method_name
-      #puts "obj respond_to method #{method_name}"
-      if called?(method_name) 
-        @messages[method_name] = @messages[method_name].next
-      else
-        @messages[method_name] = 1
-      end
+      @messages[method_name] += 1
       @object.__send__(method_name, *args)
     else
       super(method_name, *args, &block)
@@ -41,7 +35,7 @@ class Proxy
   end
 
   def number_of_times_called(method_name_sym)
-    called?(method_name_sym) ? @messages[method_name_sym] : 0
+    @messages[method_name_sym]
   end
 
   def messages()
