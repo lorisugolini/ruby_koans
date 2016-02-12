@@ -27,10 +27,10 @@ class Proxy
     puts "proxy-ing method: #{method_name} with args: #{args}"
     if @object.respond_to? method_name
       puts "obj respond_to method #{method_name}"
-      if called?(method_name) 
-        @messages.put(method_name, @messages[method_name].next)
+      if alreadyCalled?(method_name) 
+        @messages[method_name] = @messages[method_name].next
       else
-        @messages.put(method_name, 1)
+        @messages[method_name] = 1
       end
       @object.__send__(method_name, *args)
     else
@@ -38,13 +38,14 @@ class Proxy
     end
   end
 
-  def called?(method_name)
+  def alreadyCalled?(method_name)
     @messages.keys.include?(method_name)
   end
 
   def number_of_times_called(method_name_sym)
     @messages[method_name_sym]
- end
+  end
+end
 
 # The proxy object should pass the following Koan:
 #
