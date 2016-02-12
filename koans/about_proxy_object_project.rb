@@ -41,7 +41,7 @@ class Proxy
   end
 
   def number_of_times_called(method_name_sym)
-    @messages[method_name_sym]
+    called?(method_name_sym) ? @messages[method_name_sym] : 0
   end
 
   def messages()
